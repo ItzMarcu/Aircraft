@@ -1,35 +1,35 @@
 # Aircraft
 
-**Aircraft** è un action game arcade sviluppato in Java utilizzando la libreria `Swing`. Il giocatore controlla una navicella spaziale con l'obiettivo di abbattere ondate di nemici che entrano nel campo di gioco, cercando di sopravvivere il più a lungo possibile e totalizzare il punteggio più alto.
+**Aircraft** is an arcade action game developed in Java using the `Swing` library. The player controls a spacecraft with the goal of shooting down waves of enemies entering the playfield, aiming to survive as long as possible and achieve the highest score.
 
 ---
 
-## 🚀 Meccaniche di Gioco
+## 🚀 Game Mechanics
 
-* **Movimento:** Il giocatore può muovere la navicella orizzontalmente per schivare i pericoli e posizionarsi strategicamente.
-* **Sistema di Tiro:** La navicella è dotata di un cannone a ripetizione per eliminare le minacce.
-* **Nemici:** Gli avversari spawnano nella parte inferiore/centrale dello schermo e si muovono seguendo pattern predefiniti. Possono a loro volta sparare per colpire il giocatore.
-* **Progressione:** Il gioco gestisce un sistema di livelli. Una volta pulito lo schermo da tutti i nemici, il livello aumenta e la difficoltà cresce con uno spawn maggiore di avversari.
-* **Vite e Punteggio:** Il giocatore inizia con 3 vite. Ogni nemico abbattuto aumenta il punteggio totale visualizzato nell'HUD.
-
----
-
-## 🚧 Stato Attuale e Bug Noti
-
-Il progetto è attualmente in fase di **sviluppo/prototipazione**. Sebbene le basi siano solide, sono presenti alcuni errori logici e bug che richiedono attenzione:
-
-### 🔴 Problemi Critici da Risolvere:
-* **Logica delle Collisioni:** Il calcolo della distanza tra entità presenta un errore matematico nella formula della radice quadrata (differenza di quadrati invece della somma), rendendo le collisioni imprevedibili.
-* **Movimento del Giocatore:** I controlli direzionali (Sinistra/Destra) risultano attualmente invertiti o poco intuitivi rispetto alla posizione del giocatore.
-* **Sistema dei Danni:** Il sistema di "invulnerabilità temporanea" (damageable) non resetta correttamente lo stato, impedendo potenzialmente la corretta gestione delle vite.
-* **Spawn dei Proiettili:** I proiettili del giocatore ereditano la velocità della nave ma non hanno una spinta verticale propria verso l'alto, rendendo il tiro inefficace nel setup attuale.
-* **Spawn dei Nemici:** Attualmente i nemici appaiono nella parte inferiore dello schermo e si muovono verso l'alto, contrariamente al design previsto (dall'alto verso il basso).
+* **Movement:** The player can move the spacecraft horizontally to dodge hazards and position themselves strategically.
+* **Firing System:** The ship is equipped with a rapid-fire cannon to eliminate threats.
+* **Enemies:** Opponents spawn in the lower/middle part of the screen and move according to predefined patterns. They can also fire back at the player.
+* **Progression:** The game features a level system. Once all enemies are cleared from the screen, the level increases, and difficulty rises with a higher number of enemy spawns.
+* **Lives and Score:** The player starts with 3 lives. Each defeated enemy increases the total score displayed in the HUD.
 
 ---
 
-## 🎮 Comandi
-* **A / Freccia Sinistra:** Muovi a sinistra
-* **D / Freccia Destra:** Muovi a destra
-* **SPAZIO:** Spara
-* **P:** Pausa
-* **R:** Ricomincia (Game Over)
+## 🚧 Current Status and Known Bugs
+
+The project is currently in the **development/prototyping** phase. While the foundations are solid, there are several logical errors and bugs that require attention:
+
+### 🔴 Critical Issues to Resolve:
+* **Collision Logic:** The distance calculation between entities contains a mathematical error in the square root formula (using the difference of squares instead of the sum), making collisions unpredictable.
+* **Player Movement:** Directional controls (Left/Right) are currently inverted or unintuitive relative to the player's position.
+* **Damage System:** The "temporary invulnerability" (damageable) system does not reset its state correctly, potentially hindering proper life management.
+* **Projectile Spawning:** Player projectiles inherit the ship's velocity but lack their own upward vertical thrust, making shooting ineffective in the current setup.
+* **Enemy Spawning:** Currently, enemies appear at the bottom of the screen and move upwards, contrary to the intended design (top-to-bottom).
+
+---
+
+## 🎮 Controls
+* **A / Left Arrow:** Move Left
+* **D / Right Arrow:** Move Right
+* **SPACE:** Shoot
+* **P:** Pause
+* **R:** Restart (Game Over)
