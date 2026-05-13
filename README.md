@@ -20,10 +20,8 @@ The project is currently in the **development/prototyping** phase. While the fou
 
 ### 🔴 Critical Issues to Resolve:
 * **Collision Logic:** The distance calculation between entities contains a mathematical error in the square root formula (using the difference of squares instead of the sum), making collisions unpredictable.
-* **Player Movement:** Directional controls (Left/Right) are currently inverted or unintuitive relative to the player's position.
 * **Damage System:** The "temporary invulnerability" (damageable) system does not reset its state correctly, potentially hindering proper life management.
 * **Projectile Spawning:** Player projectiles inherit the ship's velocity but lack their own upward vertical thrust, making shooting ineffective in the current setup.
-* **Enemy Spawning:** Currently, enemies appear at the bottom of the screen and move upwards, contrary to the intended design (top-to-bottom).
 
 ---
 
