@@ -44,7 +44,7 @@ public final class GameArea extends JPanel implements ActionListener, KeyListene
         damageable = true;
         score = 0;
         lives = INITIAL_LIVES;
-        level = 1;
+        level = 0;
         gameOver = false;
         paused = false;
 
@@ -74,6 +74,7 @@ public final class GameArea extends JPanel implements ActionListener, KeyListene
             spawnEnemies(ENEMIES_START);
         }
 
+        player.setColor(Color.WHITE);
         repaint();
     }
 
@@ -96,7 +97,8 @@ public final class GameArea extends JPanel implements ActionListener, KeyListene
 
         if (!enemies.isEmpty()) {
             int randomEnemyIndex = rng.nextInt(enemies.size());
-            enemies.get(randomEnemyIndex).shoot();
+            Bullet b = enemies.get(randomEnemyIndex).shoot();
+            if (b != null) bullets.add(b);
         }
     }
 

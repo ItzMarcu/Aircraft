@@ -10,6 +10,11 @@ public class Bullet extends Entity {
     private int framesLeft;
 
     public Bullet(Vector2D position) {
+        super(position, new Vector2D(0, BULLET_SPEED), RADIUS);
+        framesLeft = LIFETIME;
+    }
+
+    public Bullet(Vector2D position, boolean fromShip) {
         super(position, new Vector2D(0, -BULLET_SPEED), RADIUS);
         framesLeft = LIFETIME;
     }

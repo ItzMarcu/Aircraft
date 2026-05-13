@@ -28,7 +28,7 @@ public class Ship extends Entity {
         if (shootTimer > 0) return null;
         
         shootTimer = BULLET_COUNTDOWN;
-        return new Bullet(getPosition());
+        return new Bullet(getPosition(), true);
     }
     
     @Override
