@@ -1,12 +1,12 @@
 import java.awt.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Enemy extends Entity {
     private int shootTimer;
 
-    private static final Vector2D VELOCITY = new Vector2D(1.2, -0.65);
+    private static final Vector2D VELOCITY = new Vector2D(0, 0.65);
     private static final double   RADIUS = 25;
     private static final int      BULLET_COOLDOWN = 120;
     private static final int      ENEMY_SCORE = 75;
@@ -19,7 +19,7 @@ public class Enemy extends Entity {
     
     public static Enemy spawnRandom(int screenWidth, int screenHeight) {
         int x = rng.nextInt(0, screenWidth);
-        int y = rng.nextInt(screenHeight/2, screenHeight - 20);
+        int y = rng.nextInt(screenHeight/10, screenHeight/8);
 
         Vector2D randomPosition = new Vector2D(x, y);
         return new Enemy(randomPosition);
@@ -28,7 +28,7 @@ public class Enemy extends Entity {
     public Bullet shoot() {
         if (shootTimer > 0) return null;
         shootTimer = BULLET_COOLDOWN; 
-        return new Bullet(getPosition().copy(), new Vector2D(0, VELOCITY.y));
+        return new Bullet(getPosition().copy());
     } 
 
     @Override

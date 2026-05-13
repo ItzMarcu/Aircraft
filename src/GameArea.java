@@ -1,11 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+import javax.swing.*;
 
-public class GameArea extends JPanel implements ActionListener, KeyListener {
+public final class GameArea extends JPanel implements ActionListener, KeyListener {
     private int     ENEMIES_START; 
     private int     lives; 
     private int     score;
@@ -14,23 +15,23 @@ public class GameArea extends JPanel implements ActionListener, KeyListener {
     private boolean paused;
     private boolean damageable;
 
-    private List<Enemy>  enemies;
-    private List<Bullet> bullets;
+    private final Random       rng = new Random();
+    private final List<Enemy>  enemies;
+    private final List<Bullet> bullets;
     private Ship         player;
 
-    private final int WIDTH = 600;
-    private final int HEIGHT = 900;
+    private final int SCREEN_WIDTH = 600;
+    private final int SCREEN_HEIGHT = 900;
     private final int FPS = 60;
     private final int INITIAL_LIVES = 3;
 
     private final Timer timer;
 
     public GameArea() {
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         setBackground(Color.BLACK);
         setFocusable(true);
-        addKeyListener(this);
-
+        
         enemies = new ArrayList<>();
         bullets = new ArrayList<>();
 
@@ -47,16 +48,17 @@ public class GameArea extends JPanel implements ActionListener, KeyListener {
         gameOver = false;
         paused = false;
 
-        player = new Ship(WIDTH, HEIGHT);
+        player = new Ship(SCREEN_WIDTH, SCREEN_HEIGHT);
         enemies.clear();
         bullets.clear();
 
+        addKeyListener(this);
         timer.start();
     }
 
     public void spawnEnemies(int count) {
         while (enemies.size() < count) 
-            enemies.add(Enemy.spawnRandom(WIDTH, HEIGHT));
+            enemies.add(Enemy.spawnRandom(SCREEN_WIDTH, SCREEN_HEIGHT));
     }
 
     @Override
@@ -76,27 +78,30 @@ public class GameArea extends JPanel implements ActionListener, KeyListener {
     }
 
     public void updateEntities() {
-        player.update(WIDTH, HEIGHT);
+        player.update(SCREEN_WIDTH, SCREEN_HEIGHT);
 
         Iterator<Enemy> enemiesIterator = enemies.iterator();
         while (enemiesIterator.hasNext()) {
             Enemy actual = enemiesIterator.next();
             if (!actual.isAlive()) enemiesIterator.remove();
-            else actual.update(WIDTH, HEIGHT);
+            else actual.update(SCREEN_WIDTH, SCREEN_HEIGHT);
         }
 
         Iterator<Bullet> bulletsIterator = bullets.iterator();
         while (bulletsIterator.hasNext()) {
             Bullet actual = bulletsIterator.next();
             if (!actual.isAlive()) bulletsIterator.remove();
-            else actual.update(WIDTH, HEIGHT);
+            else actual.update(SCREEN_WIDTH, SCREEN_HEIGHT);
+        }
+
+        if (!enemies.isEmpty()) {
+            int randomEnemyIndex = rng.nextInt(enemies.size());
+            enemies.get(randomEnemyIndex).shoot();
         }
     }
 
     public void checkCollisions() {
-        Iterator<Bullet> bulletsIterator = bullets.iterator();
-        while (bulletsIterator.hasNext()) {
-            Bullet b = bulletsIterator.next();
+        for (Bullet b : bullets) {
             for (Enemy e : enemies) {
                 if (!e.isAlive()) continue;
 
@@ -155,23 +160,23 @@ public class GameArea extends JPanel implements ActionListener, KeyListener {
         g.setFont(new Font("Monospaced", Font.BOLD, 16));
         g.drawString("SCORE: " + score,  10,          20);
         g.drawString("LIVES: " + lives,  10,          42);
-        g.drawString("LEVEL: " + level,  WIDTH - 110, 20);
+        g.drawString("LEVEL: " + level,  SCREEN_WIDTH - 110, 20);
     }
 
     private void drawGameOver(Graphics g) {
         g.setColor(Color.RED);
         g.setFont(new Font("Monospaced", Font.BOLD, 48));
-        g.drawString("GAME OVER", WIDTH / 2 - 140, HEIGHT / 2 - 20);
+        g.drawString("GAME OVER", SCREEN_WIDTH / 2 - 140, SCREEN_HEIGHT / 2 - 20);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.PLAIN, 20));
-        g.drawString("Score: " + score,          WIDTH / 2 - 70,  HEIGHT / 2 + 20);
-        g.drawString("Premi R per ricominciare", WIDTH / 2 - 160, HEIGHT / 2 + 50);
+        g.drawString("Score: " + score,          SCREEN_WIDTH / 2 - 70,  SCREEN_HEIGHT / 2 + 20);
+        g.drawString("Premi R per ricominciare", SCREEN_WIDTH / 2 - 160, SCREEN_HEIGHT / 2 + 50);
     }
 
     private void drawPaused(Graphics g) {
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Monospaced", Font.BOLD, 36));
-        g.drawString("PAUSA", WIDTH / 2 - 60, HEIGHT / 2);
+        g.drawString("PAUSA", SCREEN_WIDTH / 2 - 60, SCREEN_HEIGHT / 2);
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -181,24 +186,24 @@ public class GameArea extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT:  case KeyEvent.VK_A: player.setTurningLeft(true);  break;
-            case KeyEvent.VK_RIGHT: case KeyEvent.VK_D: player.setTurningRight(true); break;
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> player.setTurningLeft(true);
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> player.setTurningRight(true);
+            case KeyEvent.VK_SPACE -> {
                 if (!gameOver && !paused) {
                     Bullet b = player.shoot();
                     if (b != null) bullets.add(b);
                 }
-                break;
-            case KeyEvent.VK_P: paused = !paused; break;
-            case KeyEvent.VK_R: startGame();      break;
+            }
+            case KeyEvent.VK_P -> paused = !paused;
+            case KeyEvent.VK_R -> startGame();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT:  case KeyEvent.VK_A: player.setTurningLeft(false);  break;
-            case KeyEvent.VK_RIGHT: case KeyEvent.VK_D: player.setTurningRight(false); break;
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> player.setTurningLeft(false);
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> player.setTurningRight(false);
         }
     }
 

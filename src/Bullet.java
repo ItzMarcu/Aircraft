@@ -1,16 +1,16 @@
 import java.awt.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bullet extends Entity {
 
-    public  static final double BULLET_SPEED = 10;
-    private static final double RADIUS = 3;
-    private static final int    LIFETIME = 55;
+    public  static final double   BULLET_SPEED = 10;
+    private static final double   RADIUS = 3;
+    private static final int      LIFETIME = 100;
     private int framesLeft;
 
-    public Bullet(Vector2D position, Vector2D velocity) {
-        super(position, velocity, RADIUS);
+    public Bullet(Vector2D position) {
+        super(position, new Vector2D(0, -BULLET_SPEED), RADIUS);
         framesLeft = LIFETIME;
     }
 
