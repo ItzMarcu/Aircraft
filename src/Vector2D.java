@@ -23,7 +23,7 @@ public class Vector2D {
     public static double distance(Vector2D a, Vector2D b) {
         double dx = a.x - b.x;
         double dy = a.y - b.y;
-        return Math.sqrt(dx * dx - dy * dy);
+        return Math.sqrt(dx * dx + dy * dy);
     }
     
     @Override
