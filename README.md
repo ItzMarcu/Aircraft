@@ -19,7 +19,6 @@
 The project is currently in the **development/prototyping** phase. While the foundations are solid, there are several logical errors and bugs that require attention:
 
 ### 🔴 Critical Issues to Resolve:
-* **Collision Logic:** The distance calculation between entities contains a mathematical error in the square root formula (using the difference of squares instead of the sum), making collisions unpredictable.
 * **Damage System:** The "temporary invulnerability" (damageable) system does not reset its state correctly, potentially hindering proper life management.
 * **Projectile Spawning:** Player projectiles inherit the ship's velocity but lack their own upward vertical thrust, making shooting ineffective in the current setup.
 
