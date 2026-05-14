@@ -40,7 +40,7 @@ public final class GameArea extends JPanel implements ActionListener, KeyListene
     }
 
     public void startGame() {
-        ENEMIES_START = 10;
+        ENEMIES_START = 4;
         damageable = true;
         score = 0;
         lives = INITIAL_LIVES;
